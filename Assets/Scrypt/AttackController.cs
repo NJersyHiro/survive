@@ -6,6 +6,7 @@ public class AttackController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 	}
 
 	// Update is called once per frame
@@ -13,8 +14,8 @@ public class AttackController : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter2D(Collision2D col){
-		if(col.gameObject.tag == "PlayerRepel"){
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.CompareTag ("PlayerRepel")) {
 			DestroyObject (gameObject);
 
 			Debug.Log ("get item");

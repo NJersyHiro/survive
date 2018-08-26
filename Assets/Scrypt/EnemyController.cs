@@ -15,6 +15,9 @@ public class EnemyController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		this.transform.position = Vector2.MoveTowards (this.transform.position,new Vector2(Player.transform.position.x, Player.transform.position.y), Speed * Time.deltaTime);
+		if(Player != null){
+			this.transform.position = Vector2.MoveTowards (this.transform.position,new Vector2(Player.transform.position.x, Player.transform.position.y), Speed * Time.deltaTime);
+
+		}
 	}
 }
