@@ -8,8 +8,9 @@ public class PlayerControllerTest : MonoBehaviour {
 	public Rigidbody2D rb;
 	public float movespeed;
 	private GameObject gameoverText;
-	public Transform playergraphic;
-
+	private GameObject Play;
+	private bool isGameOver = false;
+	private Animator myAnimator;
 
 
 
@@ -17,17 +18,24 @@ public class PlayerControllerTest : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		gameoverText = GameObject.Find ("GameOverText");
-		InvokeRepeating ("debug", 1f, 1f);
+		Play = GameObject.Find ("Play");
+		Play.SetActive (false);
 		this.transform.rotation = Quaternion.Euler (0, 0, 0);
-	
+		this.myAnimator = GetComponent<Animator>();
+		this.myAnimator.SetBool ("explosion", false);
+		Debug.Log ("explode reaedy");
 	}
-		
+
 
 	//敵い衝突時破壊されてゲームオーバーを表示
 	void OnCollisionEnter2D(Collision2D col){
 		if(col.gameObject.tag == "EnemyTag"){
 			DestroyObject (gameObject);
 			gameoverText.GetComponent<Text>().text = "Game Over";
+			Play.SetActive (true);
+			isGameOver = true;
+			this.myAnimator.SetBool ("explosion", true);
+			Debug.Log ("exploded");
 		}
 
 	}
@@ -40,37 +48,14 @@ public class PlayerControllerTest : MonoBehaviour {
 
 		Vector3 movement = new Vector3 (moveHorizontal, moveVertical, 0.0f);
 		this.rb.AddForce (movement * movespeed);
-
-		//Vector3 dir = movement - transform.position;
-		//float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
-		//transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-		//Vector3 moveDirection = new Vector3 (moveHorizontal, moveVertical, 0);    
-		//if (moveDirection != Vector3.zero) {
-		//	Quaternion newRotation = Quaternion.LookRotation (moveDirection);
-		//	playergraphic.transform.rotation = Quaternion.Slerp (playergraphic.transform.rotation, newRotation, Time.deltaTime * 8);
-
-
-		if (movement != Vector3.zero) {
-			// get the angle
-			Vector3 norTar = (movement - transform.position).normalized;
-			float angle = Mathf.Atan2 (norTar.y, norTar.x) * Mathf.Rad2Deg;
-			// rotate to angle
-			Quaternion rotation = new Quaternion ();
-			rotation.eulerAngles = new Vector3 (0, 0, angle - 90);
-			transform.rotation = rotation;
-		}
+		var vec = rb.velocity.normalized;
+		var angle = (Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg) - 90.0f;
+		transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
 	}
-
-	void debug(){
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
-
-		Vector3 moveDirection = new Vector3 (moveHorizontal, moveVertical, 0); 
-		Vector3 diff = moveDirection - this.transform.position;
-
-		Debug.Log (this.transform.position);
-		Debug.Log (diff);
-
+		
+	void Update(){
+		// ゲームオーバになった場合
+		if (this.isGameOver == true){
+		}
 	}
 }

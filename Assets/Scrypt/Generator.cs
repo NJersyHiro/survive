@@ -7,44 +7,37 @@ public class Generator : MonoBehaviour {
 	public GameObject Player;
 	public GameObject EnemyPrefab;
 	public GameObject AttackPrefab;
-
+	GameObject[] tagObjects;
 
 	void Start(){
-		InvokeRepeating("Generate", 0, 1);
-		InvokeRepeating ("AttackGenerate", 0, 5);
+		InvokeRepeating("EnemyGenerate", 0, 1);
+		InvokeRepeating("AttackGenerate", 0, 5);
 		Player = GameObject.Find ("Player");
-	
 	}
 
-	void Generate(){
+	void EnemyGenerate(){
 		if(Player != null){
-		
-		GameObject newEnemy = (GameObject)Instantiate (EnemyPrefab) as GameObject;
-		float playerx = Player.transform.position.x;
-		float playery = Player.transform.position.y;
-		playerx += 2.0f;
-		playery += 2.0f;
-		int num = Random.Range (1, 3);
-		if(num == 1){
-			float x = Random.Range(-7.5f, 7.5f);
-			float y = Random.Range(playery, 5.0f);
+			GameObject newEnemy = (GameObject)Instantiate (EnemyPrefab) as GameObject;
+			float x = Random.Range(-7.4f, 7.4f);
+			float y = Random.Range(-4.9f, 4.9f);
 			newEnemy.transform.position = new Vector2(x,y);
+
+			/*Vector3 playerPos = Player.transform.position;
+			float dis = Vector3.Distance (newEnemy.transform.position, playerPos);
+		*/
 		}
-		if(num == 2){
-			float x = Random.Range(-7.5f, 7.5f);
-			float y = Random.Range(-5.0f, -playery);
-			newEnemy.transform.position = new Vector2(x,y);
-		}
-		}
+	}
+
+	void Update(){
+		tagObjects = GameObject.FindGameObjectsWithTag("AttackTag");
 	}
 
 	void AttackGenerate(){
-		if(Player != null){
+		if(Player != null && tagObjects.Length <= 1){
 		GameObject newAttack = (GameObject)Instantiate (AttackPrefab) as GameObject;
 		float x = Random.Range(-7.5f, 7.5f);
 		float y = Random.Range(-5.0f, 5.0f);
 		newAttack.transform.position = new Vector2(x,y);
-
 		}
 	}
 }
