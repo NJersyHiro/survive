@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour {
 
+	public GameObject Explosion;
 	// Use this for initialization
 	void Start () {
 
@@ -17,8 +18,7 @@ public class AttackController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.CompareTag ("PlayerRepel")) {
 			DestroyObject (gameObject);
-
-			//ノードリストを破壊する関数を呼び出す
+			explosion ();
 			DestroyObjectWithTag("EnemyTag");
 
 		}
@@ -41,5 +41,10 @@ public class AttackController : MonoBehaviour {
 				GameObject.Destroy (node);
 			}
 		}
+	}
+
+	public void explosion(){
+		GameObject Exploded = (GameObject)Instantiate (Explosion) as GameObject;
+		Exploded.transform.position = gameObject.transform.position;
 	}
 }
