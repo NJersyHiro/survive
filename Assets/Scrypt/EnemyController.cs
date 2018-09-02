@@ -6,13 +6,24 @@ public class EnemyController : MonoBehaviour {
 	GameObject Player;
 	public float Speed;
 	public PlayerControllerTest playerController; 
+	private AudioSource audioSource;
+
 
 	// Use this for initialization
 	void Start () {
+		audioSource = gameObject.GetComponent<AudioSource> ();
 		Player = GameObject.Find ("Player");
 		if (Player != null) {
 			playerController = Player.GetComponent<PlayerControllerTest> ();
 	
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D col){
+		if (col.gameObject.tag == "PlayerRepel") {
+			audioSource.PlayOneShot(audioSource.clip);
+
+		
 		}
 	}
 

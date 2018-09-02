@@ -4,7 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour {
-
+	public AudioClip push;
+	public float delay = 0.2f;
 	// Use this for initialization
 	void Start () {
 	}
@@ -15,7 +16,12 @@ public class UIController : MonoBehaviour {
 
 
 	public void Buttonpush() {
-		SceneManager.LoadScene ("GameScene");
+		GetComponent<AudioSource> ().Play();
+		Invoke ("Load", delay);
+		//GameObject.FindObjectOfType<AudioSource>().Play();
+	}
 
+	void Load(){
+		SceneManager.LoadScene ("GameScene");
 	}
 }
