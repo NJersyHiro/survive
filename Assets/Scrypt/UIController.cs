@@ -16,9 +16,11 @@ public class UIController : MonoBehaviour {
 
 
 	public void Buttonpush() {
+		Time.timeScale = 1;
 		GetComponent<AudioSource> ().Play();
 		Invoke ("Load", delay);
 		//GameObject.FindObjectOfType<AudioSource>().Play();
+		Debug.Log("Playpushed");
 	}
 
 	void Load(){

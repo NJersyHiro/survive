@@ -33,7 +33,7 @@ public class RandomBomb : MonoBehaviour {
 			Vector3 bombPos = newBomb.transform.position;
 			float dis = Vector3.Distance (nodePos, bombPos);
 
-			if (dis < 5f) {
+			if (dis < 3f) {
 				GameObject.Destroy (EnemyPrefab);
 			}
 		}

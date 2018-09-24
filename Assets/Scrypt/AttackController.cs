@@ -45,7 +45,7 @@ public class AttackController : MonoBehaviour {
 			Vector3 itemPos = this.transform.position;
 			float dis = Vector3.Distance (nodePos, itemPos);
 
-			if (dis < 5f) {
+			if (dis < 4f) {
 				GameObject.Destroy (node);
 			}
 		}
